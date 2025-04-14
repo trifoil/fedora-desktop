@@ -1,6 +1,8 @@
 #!/bin/bash
 
 dnf update -y
+dnf remove firefox gnome-weather
+gnome-clocks gnome-contacts cheese gnome-tour gnome-music gnome-calendar yelp xsane totem snapshot gnome-software firefox epiphany libreoffice-impress libreoffice-writer libreoffice-calc -y
 
 dnf install @virtualization -y
 dnf group install --with-optional virtualization -y
@@ -8,10 +10,12 @@ systemctl start libvirtd
 systemctl enable libvirtd
 usermod -a -G libvirt $(whoami)
 
+sudo dnf install rustup cargo -y
 dnf install texlive-scheme-full libreoffice texstudio deluge freecad inkscape blender -y
 dnf install krita -y
 dnf install helvum btop fastfetch conky wine winetricks -y
 sudo dnf install hydrapaper -y
+    
 flatpak install flathub org.videolan.VLC -y
 flatpak install rustdesk -y
 flatpak install zed -y
@@ -36,6 +40,8 @@ flatpak install flathub fr.romainvigier.MetadataCleaner -y
 flatpak install flathub im.nheko.Nheko -y
 flatpak install flathub io.github.bytezz.IPLookup -y
 
-
-
 dnf remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine -y
+dnf -y install dnf-plugins-core
+dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+systemctl enable --now docker
