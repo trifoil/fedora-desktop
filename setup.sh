@@ -1,8 +1,7 @@
 #!/bin/bash
 
 dnf update -y
-dnf remove firefox gnome-weather
-gnome-clocks gnome-contacts cheese gnome-tour gnome-music gnome-calendar yelp xsane totem snapshot gnome-software firefox epiphany libreoffice-impress libreoffice-writer libreoffice-calc -y
+dnf remove firefox gnome-weather gnome-clocks gnome-contacts cheese gnome-tour gnome-music gnome-calendar yelp xsane totem snapshot gnome-software firefox epiphany libreoffice-impress libreoffice-writer libreoffice-calc -y
 
 dnf install @virtualization -y
 dnf group install --with-optional virtualization -y
