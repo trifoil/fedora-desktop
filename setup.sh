@@ -9,11 +9,12 @@ systemctl start libvirtd
 systemctl enable libvirtd
 usermod -a -G libvirt $(whoami)
 
-sudo dnf install rustup cargo -y
-dnf install texlive-scheme-full libreoffice texstudio deluge freecad inkscape blender -y
+dnf install rustup cargo -y
+dnf install texlive-scheme-full -y
+dnf install libreoffice texstudio deluge freecad inkscape blender -y
 dnf install krita -y
 dnf install helvum btop fastfetch conky wine winetricks -y
-sudo dnf install hydrapaper -y
+dnf install hydrapaper -y
     
 flatpak install flathub org.videolan.VLC -y
 flatpak install rustdesk -y
