@@ -5,7 +5,7 @@ dnf remove firefox gnome-weather gnome-clocks gnome-contacts cheese gnome-tour g
 
 dnf install @virtualization -y
 dnf group install --with-optional virtualization -y
-systemctl start libvirtd 
+systemctl start libvirtd
 systemctl enable libvirtd
 usermod -a -G libvirt $(whoami)
 
@@ -16,7 +16,7 @@ dnf install libreoffice texstudio deluge freecad inkscape blender -y
 dnf install krita -y
 dnf install helvum btop fastfetch conky wine winetricks -y
 dnf install hydrapaper -y
-    
+
 flatpak install flathub org.videolan.VLC -y
 flatpak install rustdesk -y
 flatpak install zed -y
@@ -41,8 +41,27 @@ flatpak install flathub fr.romainvigier.MetadataCleaner -y
 flatpak install flathub im.nheko.Nheko -y
 flatpak install flathub io.github.bytezz.IPLookup -y
 
-dnf remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine -y
+dnf install cockpit
+systemctl enable --now cockpit.socket
+firewall-cmd --add-service=cockpit
+firewall-cmd --add-service=cockpit --permanent
+
+dnf remove docker \
+           docker-client \
+           docker-client-latest \
+           docker-common \
+           docker-latest \
+           docker-latest-logrotate \
+           docker-logrotate \
+           docker-selinux \
+           docker-engine-selinux \
+           docker-engine
+
 dnf -y install dnf-plugins-core
 dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 systemctl enable --now docker
+
+rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h\n" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+sudo dnf install codium -y
