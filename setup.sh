@@ -9,6 +9,7 @@ systemctl start libvirtd
 systemctl enable libvirtd
 usermod -a -G libvirt $(whoami)
 
+dnf install seahorse -y
 dnf install rustup cargo -y
 dnf install texlive-scheme-full -y
 dnf install libreoffice texstudio deluge freecad inkscape blender -y
