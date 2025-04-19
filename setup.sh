@@ -12,7 +12,12 @@ usermod -a -G libvirt $(whoami)
 dnf install seahorse -y
 dnf install rustup cargo -y
 dnf install texlive-scheme-full -y
-dnf install libreoffice texstudio deluge freecad inkscape blender -y
+dnf install libreoffice -y
+dnf install texstudio -y
+dnf install deluge -y
+dnf install freecad -y
+dnf install inkscape -y
+dnf install blender -y
 dnf install krita -y
 dnf install helvum btop fastfetch conky wine winetricks -y
 dnf install hydrapaper -y
