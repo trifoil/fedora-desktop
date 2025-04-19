@@ -40,6 +40,7 @@ flatpak install flathub org.gimp.GIMP -y
 flatpak install flathub fr.romainvigier.MetadataCleaner -y
 flatpak install flathub im.nheko.Nheko -y
 flatpak install flathub io.github.bytezz.IPLookup -y
+flatpak install flathub net.waterfox.waterfox
 
 dnf install cockpit
 systemctl enable --now cockpit.socket
