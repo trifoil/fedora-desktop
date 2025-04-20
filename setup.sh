@@ -15,7 +15,6 @@ dnf install texlive-scheme-full -y
 dnf install libreoffice -y
 dnf install texstudio -y
 dnf install deluge -y
-dnf install freecad -y
 dnf install inkscape -y
 dnf install blender -y
 dnf install krita -y
@@ -45,9 +44,10 @@ flatpak install flathub org.gimp.GIMP -y
 flatpak install flathub fr.romainvigier.MetadataCleaner -y
 flatpak install flathub im.nheko.Nheko -y
 flatpak install flathub io.github.bytezz.IPLookup -y
-flatpak install flathub net.waterfox.waterfox
+flatpak install flathub net.waterfox.waterfox -y
+flatpak install flathub org.freecad.FreeCAD -y
 
-dnf install cockpit
+dnf install cockpit -y
 systemctl enable --now cockpit.socket
 firewall-cmd --add-service=cockpit
 firewall-cmd --add-service=cockpit --permanent
@@ -61,11 +61,11 @@ dnf remove docker \
            docker-logrotate \
            docker-selinux \
            docker-engine-selinux \
-           docker-engine
+           docker-engine 
 
-dnf -y install dnf-plugins-core
-dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+dnf -y install dnf-plugins-core 
+dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo 
+dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 systemctl enable --now docker
 
 rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
