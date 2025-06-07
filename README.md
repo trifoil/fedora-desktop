@@ -35,3 +35,10 @@ sudo sh setup.sh
 When booting from the created USB:
 - At the boot prompt, type: `linux ks=hd:LABEL=Fedora-WS-Live-*/fedora-desktop.ks`
 - The installation will proceed automatically with your configured settings
+
+
+
+
+Creating a Kickstart Boot CD-ROM
+
+To perform a CD-ROM-based kickstart installation, the kickstart file must be named ks.cfg and must be located in the boot CD-ROM’s top-level directory. Since a CD-ROM is read-only, the file must be added to the directory used to create the image that is written to the CD-ROM. Refer to the Making an Installation Boot CD-ROM section in the Red Hat Enterprise Linux Installation Guide for instruction on creating a boot CD-ROM; however, before making the file.iso image file, copy the ks.cfg kickstart file to the isolinux/ directory.
