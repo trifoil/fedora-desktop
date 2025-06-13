@@ -227,10 +227,20 @@ get_user_input() {
 
 # Function to create kickstart file
 create_kickstart() {
-    local ks_file="$1/fedora-desktop.ks"
+    local temp_dir="$1"
+    local ks_file="$temp_dir/isolinux/ks.cfg"
     
     print_info "Creating kickstart file..."
     debug "Kickstart file location: $ks_file"
+    
+    # Create isolinux directory if it doesn't exist
+    if [[ ! -d "$temp_dir/isolinux" ]]; then
+        debug "Creating isolinux directory..."
+        mkdir -p "$temp_dir/isolinux" || {
+            print_error "Failed to create isolinux directory"
+            return 1
+        }
+    fi
     
     # Generate password hashes
     debug "Generating password hashes..."
@@ -454,7 +464,7 @@ modify_boot_config() {
         debug "Original grub.cfg content (first 10 lines):"
         [[ $DEBUG -ge 3 ]] && head -n 10 "$grub_cfg" | debug
         
-        if sed -i "s|quiet|inst.ks=cdrom:/fedora-desktop.ks quiet|g" "$grub_cfg"; then
+        if sed -i "s|quiet|inst.ks=cdrom:/isolinux/ks.cfg quiet|g" "$grub_cfg"; then
             print_success "Modified UEFI boot configuration"
             debug "Modified grub.cfg content (first 10 lines):"
             [[ $DEBUG -ge 3 ]] && head -n 10 "$grub_cfg" | debug
@@ -476,7 +486,7 @@ modify_boot_config() {
         debug "Original isolinux.cfg content (first 10 lines):"
         [[ $DEBUG -ge 3 ]] && head -n 10 "$isolinux_cfg" | debug
         
-        if sed -i "s|quiet|inst.ks=cdrom:/fedora-desktop.ks quiet|g" "$isolinux_cfg"; then
+        if sed -i "s|quiet|inst.ks=cdrom:/isolinux/ks.cfg quiet|g" "$isolinux_cfg"; then
             print_success "Modified BIOS boot configuration"
             debug "Modified isolinux.cfg content (first 10 lines):"
             [[ $DEBUG -ge 3 ]] && head -n 10 "$isolinux_cfg" | debug
@@ -495,7 +505,7 @@ modify_boot_config() {
     local syslinux_cfg="$temp_dir/syslinux/syslinux.cfg"
     if [[ -f "$syslinux_cfg" ]]; then
         debug "Found syslinux.cfg at $syslinux_cfg"
-        if sed -i "s|quiet|inst.ks=cdrom:/fedora-desktop.ks quiet|g" "$syslinux_cfg"; then
+        if sed -i "s|quiet|inst.ks=cdrom:/isolinux/ks.cfg quiet|g" "$syslinux_cfg"; then
             print_success "Modified syslinux configuration"
         else
             print_error "Failed to modify syslinux.cfg"
@@ -504,10 +514,10 @@ modify_boot_config() {
     fi
     
     # Ensure ks.cfg is accessible
-    if [[ ! -f "$temp_dir/fedora-desktop.ks" ]]; then
-        print_error "Kickstart file not found in ISO root!"
-        debug "Contents of ISO root:"
-        [[ $DEBUG -ge 3 ]] && ls -la "$temp_dir" | debug
+    if [[ ! -f "$temp_dir/isolinux/ks.cfg" ]]; then
+        print_error "Kickstart file not found in isolinux directory!"
+        debug "Contents of isolinux directory:"
+        [[ $DEBUG -ge 3 ]] && ls -la "$temp_dir/isolinux" | debug
         return 1
     fi
     

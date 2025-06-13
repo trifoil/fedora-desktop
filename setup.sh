@@ -21,6 +21,8 @@ dnf install krita -y
 dnf install helvum btop fastfetch conky wine winetricks -y
 dnf install hydrapaper -y
 
+curl -fsS https://dl.brave.com/install.sh | sh
+
 flatpak install flathub org.videolan.VLC -y
 flatpak install rustdesk -y
 flatpak install zed -y
