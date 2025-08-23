@@ -76,3 +76,27 @@ systemctl enable --now docker
 rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
 printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h\n" | sudo tee -a /etc/yum.repos.d/vscodium.repo
 sudo dnf install codium -y
+
+# Setup Conky for autostart
+echo "Setting up Conky for autostart..."
+# Copy conky config to user's home directory
+cp conky.conf ~/.conkyrc
+
+# Create autostart directory if it doesn't exist
+mkdir -p ~/.config/autostart
+
+# Create desktop entry for Conky autostart
+cat > ~/.config/autostart/conky.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=Conky
+Comment=System monitor
+Exec=conky -c ~/.conkyrc
+Terminal=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+# Make the desktop entry executable
+chmod +x ~/.config/autostart/conky.desktop
+
+echo "Conky has been configured to start automatically on login"
