@@ -20,6 +20,7 @@ dnf install blender -y
 dnf install krita -y
 dnf install helvum btop fastfetch conky wine winetricks -y
 dnf install hydrapaper -y
+sudo dnf install gnome-tweaks -y
 
 curl -fsS https://dl.brave.com/install.sh | sh
 
